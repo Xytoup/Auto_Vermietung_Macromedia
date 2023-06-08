@@ -1,4 +1,4 @@
-from Car import *
+from car import *
 
 class Database:
     @classmethod
@@ -29,11 +29,18 @@ class Database:
 
         return car_list
 
-def delete_car_by_id(car_id, car_list):
-    for car in car_list:
-        if car.get_id() == car_id:
-            car_list.remove(car)
-            print(f"Car with ID '{car_id}' has been deleted.")
-            break
-    else:
-        print(f"Car with ID '{car_id}' not found.")
+    @classmethod
+    def delete_car_by_id(cls, car_id, car_list):
+        for car in car_list:
+            if car.get_id() == car_id:
+                car_list.remove(car)
+                print(f"Car with ID '{car_id}' has been deleted.")
+                break
+        else:
+            print(f"Car with ID '{car_id}' not found.")
+
+    @classmethod
+    def add_car(cls, brand, mileage, model, color, rental_price, location, year, id, car_list, status="available"):
+        new_car = Car(brand, mileage, model, color, rental_price, location, year, id, status)
+        car_list.append(new_car)
+        print("New car added successfully.")

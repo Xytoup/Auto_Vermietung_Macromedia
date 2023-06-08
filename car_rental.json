@@ -20,5 +20,16 @@
         "year": 2005,
         "id": 2,
         "status": "available"
+    },
+    {
+        "brand": "BMW",
+        "mileage": "200000",
+        "model": "E92 335i",
+        "color": "Silver",
+        "rental_price": "150",
+        "location": "City A",
+        "year": "2006",
+        "id": "3",
+        "status": "available"
     }
 ]
