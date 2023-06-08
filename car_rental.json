@@ -1,9 +1,24 @@
-{
-  "brand": "Toyota",
-  "mileage": 5000,
-  "model": "Corolla",
-  "color": "Blue",
-  "rental_price": 50,
-  "location": "City A",
-  "status": "available"
-}
+[
+    {
+        "brand": "Toyota",
+        "mileage": 9000,
+        "model": "Corolla",
+        "color": "Blue",
+        "rental_price": 50,
+        "location": "City A",
+        "year": 2001,
+        "id": 1,
+        "status": "available"
+    },
+    {
+        "brand": "Honda",
+        "mileage": 8000,
+        "model": "Civic",
+        "color": "Red",
+        "rental_price": 60,
+        "location": "City B",
+        "year": 2005,
+        "id": 2,
+        "status": "available"
+    }
+]

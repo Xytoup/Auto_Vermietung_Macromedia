@@ -1,12 +1,31 @@
+import json
+
+
 class Car:
-    def __init__(self, brand, mileage, model, color, rental_price, location):
+    def __init__(self, brand, mileage, model, color, rental_price, location, year, id, status = "available"):
         self.brand = brand
         self.mileage = mileage
         self.model = model
         self.color = color
         self.rental_price = rental_price
         self.location = location
-        self.status = "available"
+        self.year = year
+        self.id = id
+        self.status = status
+
+    def to_dict(self):
+        return {
+            "brand": self.brand,
+            "mileage": self.mileage,
+            "model": self.model,
+            "color": self.color,
+            "rental_price": self.rental_price,
+            "location": self.location,
+            "year": self.year,
+            "id": self.id,
+            "status": self.status
+        }
+
 
     def set_brand(self, brand):
         self.brand = brand
@@ -44,6 +63,18 @@ class Car:
     def get_location(self):
         return self.location
 
+    def set_year(self, year):
+        self.year = int(year)
+
+    def get_year(self):
+        return self.year
+
+    def set_id(self, id):
+        self.id = id
+
+    def get_id(self):
+        return self.id
+
     def set_rented(self):
         self.status = "rented"
 
@@ -55,5 +86,6 @@ class Car:
             return True
         else:
             return False
+
     def calculate_rental_cost(self, days):
         return self.rental_price * int(days)
