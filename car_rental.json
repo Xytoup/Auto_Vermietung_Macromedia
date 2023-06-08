@@ -1,0 +1,9 @@
+{
+  "brand": "Toyota",
+  "mileage": 5000,
+  "model": "Corolla",
+  "color": "Blue",
+  "rental_price": 50,
+  "location": "City A",
+  "status": "available"
+}
