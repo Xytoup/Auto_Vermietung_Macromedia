@@ -1,35 +1,46 @@
 [
     {
         "brand": "Toyota",
-        "mileage": 9000,
+        "mileage": 90000,
         "model": "Corolla",
         "color": "Blue",
         "rental_price": 50,
-        "location": "City A",
+        "location": "Muenchen",
         "year": 2001,
-        "id": 1,
-        "status": "available"
-    },
-    {
-        "brand": "Honda",
-        "mileage": 8000,
-        "model": "Civic",
-        "color": "Red",
-        "rental_price": 60,
-        "location": "City B",
-        "year": 2005,
-        "id": 2,
+        "id": 1000,
         "status": "available"
     },
     {
         "brand": "BMW",
-        "mileage": "200000",
+        "mileage": 200000,
         "model": "E92 335i",
         "color": "Silver",
-        "rental_price": "150",
-        "location": "City A",
-        "year": "2006",
-        "id": "3",
+        "rental_price": 150,
+        "location": "Freiburg",
+        "year": 2006,
+        "id": 3000,
+        "status": "available"
+    },
+    {
+        "brand": "BMW",
+        "mileage": 180000,
+        "model": "E90 320i",
+        "color": "Black",
+        "rental_price": 80,
+        "location": "Freiburg",
+        "year": 2005,
+        "id": 5000,
+        "status": "available"
+    },
+    {
+        "brand": "Mercedes",
+        "mileage": 140000,
+        "model": "CLS 400",
+        "color": "Black",
+        "rental_price": 140,
+        "location": "Koeln",
+        "year": 2014,
+        "id": 1734,
         "status": "available"
     }
 ]
