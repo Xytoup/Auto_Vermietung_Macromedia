@@ -99,7 +99,7 @@ def list_customers(customer_list):
         print("Name:", customer.get_name())
         print("Age:", customer.get_age())
         print("ID:", customer.get_id())
-        print("Car:", customer.get_rented_car())
+        print("Car ID:", customer.get_rented_car())
         print("------------------------------------")
 
 
@@ -137,6 +137,11 @@ def get_car_by_id(car_list, car_id):
         if car.get_id() == car_id:
             return car
     return None
+
+
+def check_in(customer, car):
+    customer.set_rented_car(None)
+    car.set_available()
 
 
 def car_id_generator(car_list):

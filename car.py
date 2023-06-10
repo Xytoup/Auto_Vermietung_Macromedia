@@ -84,7 +84,7 @@ class Car:
         return self.status
 
     def check_availability(self):
-        if self.status == "available":
+        if self.status == "rented":
             return True
         else:
             return False

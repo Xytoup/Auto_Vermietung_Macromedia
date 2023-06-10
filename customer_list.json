@@ -3,7 +3,7 @@
         "name": "Peter",
         "age": 35,
         "id": 1000,
-        "rented_car": null
+        "rented_car": "1000"
     },
     {
         "name": "John",
