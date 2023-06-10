@@ -80,6 +80,9 @@ class Car:
     def set_available(self):
         self.status = "available"
 
+    def get_status(self):
+        return self.status
+
     def check_availability(self):
         if self.status == "available":
             return True

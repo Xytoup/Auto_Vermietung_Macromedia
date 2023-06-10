@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Peter",
+        "age": 35,
+        "id": 1000,
+        "rented_car": null
+    },
+    {
+        "name": "John",
+        "age": 67,
+        "id": 3304,
+        "rented_car": null
+    },
+    {
+        "name": "Jack",
+        "age": 35,
+        "id": 1242,
+        "rented_car": null
+    }
+]
