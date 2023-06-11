@@ -8,7 +8,7 @@
         "location": "Muenchen",
         "year": 2001,
         "id": 1000,
-        "status": "rented"
+        "status": "available"
     },
     {
         "brand": "BMW",
@@ -30,7 +30,7 @@
         "location": "Freiburg",
         "year": 2005,
         "id": 5000,
-        "status": "available"
+        "status": "rented"
     },
     {
         "brand": "Mercedes",
