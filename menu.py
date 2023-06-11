@@ -2,9 +2,7 @@ import database
 from database import *
 import os
 
-# Load all cars from the JSON file
-loaded_cars = Database.load_all_cars("car_list.json")
-loaded_customers = Database.load_all_customers("customer_list.json")
+loaded_cars, loaded_customers = load_all()
 
 # Add ASCII art and styling to the main menu
 MAIN_MENU_ART = """
@@ -26,6 +24,7 @@ CUSTOMER_MENU_ART = """
        CUSTOMER MANAGEMENT MENU
 -------------------------------------
 """
+
 
 # Function to clear the screen
 def clear_screen():
@@ -51,7 +50,7 @@ def main_menu():
 
 
 # Function to display the vehicle management menu
-def vehicle_menu():
+def vehicle_menu(loaded_cars):
     allowed = ["s", "a", "i", "d", "x"]
     while True:
         clear_screen()
@@ -74,14 +73,16 @@ def vehicle_menu():
                     Database.add_car(
                         input("Brand > "), int(input("Mileage > ")), input("Model > "), input("Color > "),
                         int(input("Rental price > ")), input("Location > "), int(input("Year > ")),
-                        car_id_generator(loaded_cars), loaded_cars
-                    )  # Call function to add a new car
+                        car_id_generator(loaded_cars), loaded_cars)  # Call function to add a new car
+                    input("press anything")
                 case "i":
                     show_car_by_id(loaded_cars, input("Please state the ID of the car you want to search: "))
                     # Call function to show a specific car by its ID
+                    input("press anything")
                 case "d":
                     Database.delete_car_by_id(input("Please state the ID of the car you want to delete: "), loaded_cars)
                     # Call function to delete a car by its ID
+                    input("press anything")
                 case "x":
                     break  # Exit the vehicle menu
         else:
@@ -89,7 +90,7 @@ def vehicle_menu():
 
 
 # Function to display the customer management menu
-def customer_menu():
+def customer_menu(loaded_customers):
     allowed = ["s", "a", "r", "x", "c"]
     while True:
         clear_screen()
@@ -112,10 +113,13 @@ def customer_menu():
                 list_customers(loaded_customers)  # Call function to list all customers
             case "a":
                 add_new_customer()  # Call function to add a new customer
+                input("press anything")
             case "r":
                 rent_out_car()  # Call function to rent out a car
+                input("press anything")
             case "c":
                 check_in_car()  # Call function to check in a car
+                input("press anything")
             case "x":
                 break  # Exit the customer menu
 
@@ -200,10 +204,10 @@ def check_in_car():
 
     # ASCII art for the check in car prompt
     CHECK_IN_CAR_PROMPT_ART = """
--------------------------------------
-         CHECK IN A CAR
--------------------------------------
-"""
+    -------------------------------------
+             CHECK IN A CAR
+    -------------------------------------
+    """
 
     while True:
         print(CHECK_IN_CAR_PROMPT_ART)
@@ -263,15 +267,3 @@ def check_in_car():
                 print("Invalid car ID.")
         else:
             print("Invalid customer ID.")
-
-
-# Call the main menu function to start the program
-main_choice = main_menu()
-
-while main_choice.lower() != "x":
-    if main_choice.lower() == "v":
-        vehicle_menu()
-    elif main_choice.lower() == "c":
-        customer_menu()
-
-    main_choice = main_menu()

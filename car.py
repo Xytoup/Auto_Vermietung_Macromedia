@@ -1,6 +1,3 @@
-import json
-
-
 class Car:
     def __init__(self, brand, mileage, model, color, rental_price, location, year, id, status="available"):
         self.brand = brand

@@ -1,7 +1,43 @@
 import random
 import json
+import os
 from car import Car
 from customer import Customer
+
+
+def load_all():
+    # Get the absolute file path
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    car_list_file = os.path.join(script_dir, "car_list.json")
+
+    # Load all cars from the JSON file
+    loaded_cars = Database.load_all_cars(car_list_file)
+
+    # Get the absolute file path
+    customer_list_file = os.path.join(script_dir, "customer_list.json")
+
+    # Load all customers from the JSON file
+    loaded_customers = Database.load_all_customers(customer_list_file)
+
+    return loaded_cars, loaded_customers
+
+
+def save_all(loaded_cars, loaded_customers):
+    # Get the absolute file path
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    car_list_file = os.path.join(script_dir, "car_list.json")
+
+    # Save all cars to the JSON file
+    Database.save_all_cars(car_list_file, loaded_cars)
+
+    # Get the absolute file path
+    customer_list_file = os.path.join(script_dir, "customer_list.json")
+
+    # Save all customers to the JSON file
+    Database.save_all_customers(customer_list_file, loaded_customers)
+
+    print("The data has been saved")
 
 
 class Database:
@@ -109,7 +145,7 @@ def list_cars(loaded_cars):
         print("Year:", car.get_year())
         print("ID:", car.get_id())
         print("------------------------------------")
-
+    input("press anything")
 
 def list_customers(customer_list):
     # Display information for each customer in the customer list
@@ -120,6 +156,7 @@ def list_customers(customer_list):
         print("ID:", customer.get_id())
         print("Car ID:", customer.get_rented_car())
         print("------------------------------------")
+    input("press anything")
 
 
 def get_customer_by_id(customer_list, customer_id):

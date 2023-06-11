@@ -1,17 +1,12 @@
 from menu import *
 
 while True:
+    choice = main_menu().lower()
 
-    match main_menu().lower():
-        case "v":
-            vehicle_menu()
-
-        case "c":
-            customer_menu()
-
-        case "x":
-            # Save all cars to the JSON file before exiting
-            Database.save_all_cars("car_list.json", loaded_cars)
-            Database.save_all_customers("customer_list.json", loaded_customers)
-            print("The data has been saved")
-            break
+    if choice == "v":
+        vehicle_menu(loaded_cars)  # Pass the loaded cars as an argument
+    elif choice == "c":
+        customer_menu(loaded_customers)  # Pass the loaded customers as an argument
+    elif choice == "x":
+        database.save_all(loaded_cars, loaded_customers)
+        break
