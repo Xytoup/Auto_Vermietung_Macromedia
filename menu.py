@@ -70,10 +70,31 @@ def vehicle_menu(loaded_cars):
                 case "s":
                     list_cars(loaded_cars)  # Call function to list all cars
                 case "a":
-                    Database.add_car(
-                        input("Brand > "), int(input("Mileage > ")), input("Model > "), input("Color > "),
-                        int(input("Rental price > ")), input("Location > "), int(input("Year > ")),
-                        car_id_generator(loaded_cars), loaded_cars)  # Call function to add a new car
+                    brand = input("Brand > ")
+                    model = input("Model > ")
+                    while True:
+                        try:
+                            mileage = int(input("Mileage > "))
+                            break
+                        except ValueError:
+                            print("Please enter a valid number!")
+                    color = input("Color > ")
+                    while True:
+                        try:
+                            year = int(input("Year > "))
+                            break
+                        except ValueError:
+                            print("Please enter a valid number!")
+                    while True:
+                        try:
+                            rental_price = int(input("Rental price > "))
+                            break
+                        except ValueError:
+                            print("Please enter a valid number!")
+                    location = input("Location > ")
+
+                    Database.add_car(brand, mileage, model, color, rental_price, location, year,
+                                     car_id_generator(loaded_cars), loaded_cars)
                     input("press anything")
                 case "i":
                     show_car_by_id(loaded_cars, input("Please state the ID of the car you want to search: "))
@@ -127,7 +148,12 @@ def customer_menu(loaded_customers):
 def add_new_customer():
     print(CUSTOMER_MENU_ART)
     name = input("Name: ")
-    age = int(input("Age: "))
+    while True:
+        try:
+            age = int(input("Age: "))
+            break
+        except ValueError:
+            print("Please enter a valid number!")
     customer_id = customer_id_generator(loaded_customers)
     Database.add_customer(name, age, customer_id, loaded_customers)  # Call function to add a new customer
 
@@ -181,7 +207,7 @@ def rent_out_car():
 
                 # Check if the car is already rented
                 if selected_car.check_availability():
-                    print("This car is already rented.")
+                    print("This car is already rented out.")
                 else:
                     # Assign the car to the customer and mark it as rented
                     selected_customer.set_rented_car(choice)

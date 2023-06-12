@@ -42,5 +42,16 @@
         "year": 2014,
         "id": 1734,
         "status": "available"
+    },
+    {
+        "brand": "Skoda",
+        "mileage": 200000,
+        "model": "Octavia",
+        "color": "Blue",
+        "rental_price": 110,
+        "location": "Leipzig",
+        "year": 2014,
+        "id": 4734,
+        "status": "available"
     }
 ]

@@ -16,5 +16,11 @@
         "age": 35,
         "id": 1242,
         "rented_car": null
+    },
+    {
+        "name": "Joseph",
+        "age": 34,
+        "id": 2991,
+        "rented_car": null
     }
 ]
