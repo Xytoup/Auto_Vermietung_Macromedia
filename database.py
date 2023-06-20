@@ -5,6 +5,7 @@ from car import *
 from customer import Customer
 
 
+# Function to load car and customer data from JSON files
 def load_all():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     car_list_file = os.path.join(script_dir, "car_list.json")
@@ -16,6 +17,7 @@ def load_all():
     return loaded_cars, loaded_customers
 
 
+# Function to save car and customer data to JSON files
 def save_all(loaded_cars, loaded_customers):
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,6 +30,7 @@ def save_all(loaded_cars, loaded_customers):
     print("The data has been saved")
 
 
+# Database class to handle JSON file operations
 class Database:
     @classmethod
     def save_all_cars(cls, filename, car_list):
@@ -87,6 +90,7 @@ class Database:
 
     @staticmethod
     def delete_car_by_id(car_id, car_list):
+        # Delete a car from the car list based on its ID
         for car in car_list:
             if car.get_id() == int(car_id):
                 car_list.remove(car)
@@ -98,28 +102,30 @@ class Database:
     @classmethod
     def add_car(cls, brand, mileage, model, color, rental_price, location, year, id, car_list, status="available",
                 is_electric=False, battery_capacity=0):
-        # Create a new car object
+        # Create a new car object and add it to the car list
         if is_electric:
             new_car = ElectricCar(brand, mileage, model, color, rental_price, location, year, id, status,
                                   battery_capacity)
         else:
             new_car = Car(brand, mileage, model, color, rental_price, location, year, id, status)
-        # Add the new car to the car list
         car_list.append(new_car)
         print("New car added successfully.")
 
     @staticmethod
     def save_all_customers(filename, customer_list):
+        # Convert customer objects to dictionaries
         customers = [customer.to_dict() for customer in customer_list]
         with open(filename, "w") as file:
             json.dump(customers, file, indent=4)
 
     @staticmethod
     def load_all_customers(filename):
+        # Load customer data from the JSON file
         with open(filename, "r") as file:
             customers_data = json.load(file)
 
         customer_list = []
+        # Create customer objects from the loaded data and add them to the customer list
         for customer in customers_data:
             customer_obj = Customer(
                 name=customer["name"],
@@ -133,28 +139,31 @@ class Database:
 
     @staticmethod
     def add_customer(name, age, id, customer_list):
+        # Create a new customer object and add it to the customer list
         new_customer = Customer(name, age, id)
         customer_list.append(new_customer)
         print("New customer added successfully.")
 
     @staticmethod
     def get_all_customer_ids(customer_list):
+        # Get a list of all customer IDs
         return [customer.id for customer in customer_list]
 
 
-
+# Function to list all cars in the loaded car list
 def list_cars(loaded_cars):
     # Display information for each car in the loaded car list
     for car in loaded_cars:
         print("------------------------------------")
         print("Brand:", car.get_brand())
-        print("Model: ", car.get_model())
+        print("Model:", car.get_model())
         print("Year:", car.get_year())
         print("ID:", car.get_id())
         print("------------------------------------")
-    input("press anything")
+    input("Press anything to continue.")
 
 
+# Function to list all customers in the customer list
 def list_customers(customer_list):
     # Display information for each customer in the customer list
     for customer in customer_list:
@@ -164,9 +173,10 @@ def list_customers(customer_list):
         print("ID:", customer.get_id())
         print("Car ID:", customer.get_rented_car())
         print("------------------------------------")
-    input("press anything")
+    input("Press anything to continue.")
 
 
+# Function to get a customer object from the customer list based on ID
 def get_customer_by_id(customer_list, customer_id):
     # Find the customer with the given ID in the customer list
     for customer in customer_list:
@@ -177,6 +187,7 @@ def get_customer_by_id(customer_list, customer_id):
     return None
 
 
+# Function to display information about a car based on its ID
 def show_car_by_id(loaded_cars, car_id):
     # Find the car with the given ID in the loaded car list
     for car in loaded_cars:
@@ -184,14 +195,14 @@ def show_car_by_id(loaded_cars, car_id):
             # Display car information
             print("------------------------------------")
             print("Brand:", car.get_brand())
-            print("Model: ", car.get_model())
-            print("Year: ", car.get_year())
-            print("Mileage: ", car.get_mileage())
-            print("Color: ", car.get_color())
-            print("1 day rental price: ", car.get_rental_price(), "€")
-            print("Location: ", car.get_location())
-            print("ID: ", car.get_id())
-            print("Status: ", car.get_status())
+            print("Model:", car.get_model())
+            print("Year:", car.get_year())
+            print("Mileage:", car.get_mileage())
+            print("Color:", car.get_color())
+            print("1 day rental price:", car.get_rental_price(), "€")
+            print("Location:", car.get_location())
+            print("ID:", car.get_id())
+            print("Status:", car.get_status())
             print("------------------------------------")
             return  # Exit the function if car ID is found
 
@@ -199,11 +210,13 @@ def show_car_by_id(loaded_cars, car_id):
     print("Car with ID", car_id, "not found.")
 
 
+# Function to get a list of all car IDs in the car list
 def get_all_car_ids(car_list):
     # Get a list of all car IDs
     return [car.get_id() for car in car_list]
 
 
+# Function to get a car object from the car list based on ID
 def get_car_by_id(car_list, car_id):
     # Find the car with the given ID in the car list
     for car in car_list:
@@ -213,6 +226,7 @@ def get_car_by_id(car_list, car_id):
     return None
 
 
+# Function to check in a rented car for a customer
 def check_in(customer, car):
     # Set the rented car for the customer to None
     customer.set_rented_car(None)
@@ -220,6 +234,7 @@ def check_in(customer, car):
     car.set_available()
 
 
+# Function to calculate the outstanding amount for renting a car
 def price_calc(car):
     # Calculate the outstanding amount for renting the car
     print("How many days did the customer rent the car?")
@@ -227,6 +242,7 @@ def price_calc(car):
     print(f"Outstanding amount: {days * car.get_rental_price()}€")
 
 
+# Function to generate a random car ID that is not already in use
 def car_id_generator(car_list):
     # Generate a random car ID and check if it is already in use
     new_id = random.randint(1000, 9999)
@@ -240,6 +256,7 @@ def car_id_generator(car_list):
         return new_id
 
 
+# Function to generate a random customer ID that is not already in use
 def customer_id_generator(customer_list):
     # Generate a random customer ID and check if it is already in use
     new_id = random.randint(1000, 9999)
