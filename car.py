@@ -88,3 +88,18 @@ class Car:
 
     def calculate_rental_cost(self, days):
         return self.rental_price * int(days)
+
+
+class ElectricCar(Car):
+
+    def __init__(self, brand, mileage, model, color, rental_price, location, year, id, battery_capacity,
+                 status="available"):
+        super().__init__(brand, mileage, model, color, rental_price, location, year, id, status)
+
+        self.battery_capacity = battery_capacity
+
+    def set_battery_capacity(self, battery_capacity):
+        self.battery_capacity = battery_capacity
+
+    def get_battery_capacity(self):
+        return self.battery_capacity

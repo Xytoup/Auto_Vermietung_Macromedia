@@ -70,32 +70,88 @@ def vehicle_menu(loaded_cars):
                 case "s":
                     list_cars(loaded_cars)  # Call function to list all cars
                 case "a":
-                    brand = input("Brand > ")
-                    model = input("Model > ")
-                    while True:
-                        try:
-                            mileage = int(input("Mileage > "))
-                            break
-                        except ValueError:
-                            print("Please enter a valid number!")
-                    color = input("Color > ")
-                    while True:
-                        try:
-                            year = int(input("Year > "))
-                            break
-                        except ValueError:
-                            print("Please enter a valid number!")
-                    while True:
-                        try:
-                            rental_price = int(input("Rental price > "))
-                            break
-                        except ValueError:
-                            print("Please enter a valid number!")
-                    location = input("Location > ")
+                    print("What type of car do you want to add?")
+                    print("- N for normal car")
+                    print("- E for electric car")
 
-                    Database.add_car(brand, mileage, model, color, rental_price, location, year,
-                                     car_id_generator(loaded_cars), loaded_cars)
-                    input("press anything")
+                    while True:
+                        car_type = input("> ")
+
+                        if car_type.lower() == "n":
+                            # Add a normal car
+                            brand = input("Brand > ")
+                            model = input("Model > ")
+                            while True:
+                                try:
+                                    mileage = int(input("Mileage > "))
+                                    break
+                                except ValueError:
+                                    print("Please enter a valid number!")
+                            color = input("Color > ")
+                            while True:
+                                try:
+                                    year = int(input("Year > "))
+                                    break
+                                except ValueError:
+                                    print("Please enter a valid number!")
+                            while True:
+                                try:
+                                    rental_price = int(input("Rental price > "))
+                                    break
+                                except ValueError:
+                                    print("Please enter a valid number!")
+                            location = input("Location > ")
+
+                            car_id = car_id_generator(loaded_cars)
+                            new_car = Car(brand, mileage, model, color, rental_price, location, year, car_id)
+                            loaded_cars.append(new_car)
+
+                            print("Normal car added successfully!")
+                            print("------------------------------------")
+                            break
+
+                        elif car_type.lower() == "e":
+                            # Add an electric car
+                            brand = input("Brand > ")
+                            model = input("Model > ")
+                            while True:
+                                try:
+                                    mileage = int(input("Mileage > "))
+                                    break
+                                except ValueError:
+                                    print("Please enter a valid number!")
+                            color = input("Color > ")
+                            while True:
+                                try:
+                                    year = int(input("Year > "))
+                                    break
+                                except ValueError:
+                                    print("Please enter a valid number!")
+                            while True:
+                                try:
+                                    rental_price = int(input("Rental price > "))
+                                    break
+                                except ValueError:
+                                    print("Please enter a valid number!")
+                            location = input("Location > ")
+                            while True:
+                                try:
+                                    battery_capacity = int(input("Battery capacity > "))
+                                    break
+                                except ValueError:
+                                    print("Please enter a valid number!")
+
+                            car_id = car_id_generator(loaded_cars)
+                            new_car = ElectricCar(brand, mileage, model, color, rental_price, location, year, car_id,
+                                                  battery_capacity)
+                            loaded_cars.append(new_car)
+
+                            print("Electric car added successfully!")
+                            print("------------------------------------")
+                            break
+
+                        else:
+                            print("Invalid input. Please try again.")
                 case "i":
                     show_car_by_id(loaded_cars, input("Please state the ID of the car you want to search: "))
                     # Call function to show a specific car by its ID

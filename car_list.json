@@ -8,7 +8,9 @@
         "location": "Muenchen",
         "year": 2001,
         "id": 1000,
-        "status": "available"
+        "status": "available",
+        "is_electric": false,
+        "battery_capacity": 0
     },
     {
         "brand": "BMW",
@@ -19,7 +21,9 @@
         "location": "Freiburg",
         "year": 2006,
         "id": 3000,
-        "status": "available"
+        "status": "available",
+        "is_electric": false,
+        "battery_capacity": 0
     },
     {
         "brand": "BMW",
@@ -30,7 +34,9 @@
         "location": "Freiburg",
         "year": 2005,
         "id": 5000,
-        "status": "rented"
+        "status": "rented",
+        "is_electric": false,
+        "battery_capacity": 0
     },
     {
         "brand": "Mercedes",
@@ -41,7 +47,9 @@
         "location": "Koeln",
         "year": 2014,
         "id": 1734,
-        "status": "available"
+        "status": "available",
+        "is_electric": false,
+        "battery_capacity": 0
     },
     {
         "brand": "Skoda",
@@ -52,6 +60,34 @@
         "location": "Leipzig",
         "year": 2014,
         "id": 4734,
-        "status": "available"
+        "status": "available",
+        "is_electric": false,
+        "battery_capacity": 0
+    },
+    {
+        "brand": "Tesla",
+        "mileage": 130000,
+        "model": "Model S",
+        "color": "White",
+        "rental_price": 200,
+        "location": "Leipzig",
+        "year": 2020,
+        "id": 2019,
+        "status": "available",
+        "is_electric": false,
+        "battery_capacity": 0
+    },
+    {
+        "brand": "BMW",
+        "mileage": 130000,
+        "model": "I8",
+        "color": "Red",
+        "rental_price": 300,
+        "location": "Berlin",
+        "year": 2016,
+        "id": 7688,
+        "status": "available",
+        "is_electric": true,
+        "battery_capacity": 60
     }
 ]

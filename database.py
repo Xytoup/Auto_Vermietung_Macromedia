@@ -1,40 +1,28 @@
 import random
 import json
 import os
-from car import Car
+from car import *
 from customer import Customer
 
 
 def load_all():
-    # Get the absolute file path
     script_dir = os.path.dirname(os.path.abspath(__file__))
     car_list_file = os.path.join(script_dir, "car_list.json")
-
-    # Load all cars from the JSON file
     loaded_cars = Database.load_all_cars(car_list_file)
 
-    # Get the absolute file path
     customer_list_file = os.path.join(script_dir, "customer_list.json")
-
-    # Load all customers from the JSON file
     loaded_customers = Database.load_all_customers(customer_list_file)
 
     return loaded_cars, loaded_customers
 
 
 def save_all(loaded_cars, loaded_customers):
-    # Get the absolute file path
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     car_list_file = os.path.join(script_dir, "car_list.json")
-
-    # Save all cars to the JSON file
     Database.save_all_cars(car_list_file, loaded_cars)
 
-    # Get the absolute file path
     customer_list_file = os.path.join(script_dir, "customer_list.json")
-
-    # Save all customers to the JSON file
     Database.save_all_customers(customer_list_file, loaded_customers)
 
     print("The data has been saved")
@@ -44,7 +32,17 @@ class Database:
     @classmethod
     def save_all_cars(cls, filename, car_list):
         # Convert car objects to dictionaries
-        cars = [car.to_dict() for car in car_list]
+        cars = []
+        for car in car_list:
+            car_data = car.to_dict()
+            if isinstance(car, ElectricCar):
+                car_data["is_electric"] = True
+                car_data["battery_capacity"] = car.get_battery_capacity()
+            else:
+                car_data["is_electric"] = False
+                car_data["battery_capacity"] = 0
+            cars.append(car_data)
+
         # Save the car data to a JSON file
         with open(filename, "w") as file:
             json.dump(cars, file, indent=4)
@@ -58,59 +56,70 @@ class Database:
         car_list = []
         # Create car objects from the loaded data and add them to the car list
         for car in cars_data:
-            car_obj = Car(
-                brand=car["brand"],
-                mileage=car["mileage"],
-                model=car["model"],
-                color=car["color"],
-                rental_price=car["rental_price"],
-                location=car["location"],
-                year=car["year"],
-                id=car["id"],
-                status=car["status"]
-            )
+            if car["is_electric"]:
+                car_obj = ElectricCar(
+                    brand=car["brand"],
+                    mileage=car["mileage"],
+                    model=car["model"],
+                    color=car["color"],
+                    rental_price=car["rental_price"],
+                    location=car["location"],
+                    year=car["year"],
+                    id=car["id"],
+                    status=car["status"],
+                    battery_capacity=car["battery_capacity"]
+                )
+            else:
+                car_obj = Car(
+                    brand=car["brand"],
+                    mileage=car["mileage"],
+                    model=car["model"],
+                    color=car["color"],
+                    rental_price=car["rental_price"],
+                    location=car["location"],
+                    year=car["year"],
+                    id=car["id"],
+                    status=car["status"]
+                )
             car_list.append(car_obj)
 
         return car_list
 
-    @classmethod
-    def delete_car_by_id(cls, car_id, car_list):
-        # Iterate over the car list
+    @staticmethod
+    def delete_car_by_id(car_id, car_list):
         for car in car_list:
-            # Find the car with the matching ID
             if car.get_id() == int(car_id):
-                # Remove the car from the list
                 car_list.remove(car)
                 print(f"Car with ID '{car_id}' has been deleted.")
                 break
         else:
-            # If no car with the given ID is found
             print(f"Car with ID '{car_id}' not found.")
 
     @classmethod
-    def add_car(cls, brand, mileage, model, color, rental_price, location, year, id, car_list, status="available"):
+    def add_car(cls, brand, mileage, model, color, rental_price, location, year, id, car_list, status="available",
+                is_electric=False, battery_capacity=0):
         # Create a new car object
-        new_car = Car(brand, mileage, model, color, rental_price, location, year, id, status)
+        if is_electric:
+            new_car = ElectricCar(brand, mileage, model, color, rental_price, location, year, id, status,
+                                  battery_capacity)
+        else:
+            new_car = Car(brand, mileage, model, color, rental_price, location, year, id, status)
         # Add the new car to the car list
         car_list.append(new_car)
         print("New car added successfully.")
 
-    @classmethod
-    def save_all_customers(cls, filename, customer_list):
-        # Convert customer objects to dictionaries
+    @staticmethod
+    def save_all_customers(filename, customer_list):
         customers = [customer.to_dict() for customer in customer_list]
-        # Save the customer data to a JSON file
         with open(filename, "w") as file:
             json.dump(customers, file, indent=4)
 
-    @classmethod
-    def load_all_customers(cls, filename):
-        # Load customer data from the JSON file
+    @staticmethod
+    def load_all_customers(filename):
         with open(filename, "r") as file:
             customers_data = json.load(file)
 
         customer_list = []
-        # Create customer objects from the loaded data and add them to the customer list
         for customer in customers_data:
             customer_obj = Customer(
                 name=customer["name"],
@@ -122,18 +131,16 @@ class Database:
 
         return customer_list
 
-    @classmethod
-    def add_customer(cls, name, age, id, customer_list):
-        # Create a new customer object
+    @staticmethod
+    def add_customer(name, age, id, customer_list):
         new_customer = Customer(name, age, id)
-        # Add the new customer to the customer list
         customer_list.append(new_customer)
         print("New customer added successfully.")
 
-    @classmethod
-    def get_all_customer_ids(cls, customer_list):
-        # Get a list of all customer IDs
+    @staticmethod
+    def get_all_customer_ids(customer_list):
         return [customer.id for customer in customer_list]
+
 
 
 def list_cars(loaded_cars):
@@ -146,6 +153,7 @@ def list_cars(loaded_cars):
         print("ID:", car.get_id())
         print("------------------------------------")
     input("press anything")
+
 
 def list_customers(customer_list):
     # Display information for each customer in the customer list
