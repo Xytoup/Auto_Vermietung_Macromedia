@@ -64,7 +64,7 @@ def vehicle_menu(loaded_cars):
 
         choice = input("> ")
 
-        if choice in allowed:
+        if choice.lower() in allowed:
             # Perform actions based on user choice
             match choice.lower():
                 case "s":
@@ -153,13 +153,31 @@ def vehicle_menu(loaded_cars):
                         else:
                             print("Invalid input. Please try again.")
                 case "i":
-                    show_car_by_id(loaded_cars, input("Please state the ID of the car you want to search: "))
-                    # Call function to show a specific car by its ID
-                    input("press anything")
+                    try:
+                        car_id = input("Please state the ID of the car you want to search: ")
+                        if len(car_id) != 4:
+                            raise ValueError("Invalid ID. Please enter a 4-digit ID.")
+
+                        show_car_by_id(loaded_cars, car_id)
+                        # Call function to show a specific car by its ID
+                        input("press anything")
+                    except ValueError as e:
+                        print(str(e))
+                        input("press anything")
+
                 case "d":
-                    Database.delete_car_by_id(input("Please state the ID of the car you want to delete: "), loaded_cars)
-                    # Call function to delete a car by its ID
-                    input("press anything")
+                    try:
+                        car_id = input("Please state the ID of the car you want to delete: ")
+                        if len(car_id) != 4:
+                            raise ValueError("Invalid ID. Please enter a 4-digit ID.")
+
+                        Database.delete_car_by_id(car_id, loaded_cars)
+                        # Call function to delete a car by its ID
+                        input("press anything")
+                    except ValueError as e:
+                        print(str(e))
+                        input("press anything")
+
                 case "x":
                     break  # Exit the vehicle menu
         else:
@@ -239,42 +257,56 @@ def rent_out_car():
             break
 
         # Check if the entered customer ID is valid
-        elif int(choice) in customer_ids:
-            print(f"Customer with ID {choice} selected")
-            selected_customer = get_customer_by_id(loaded_customers, choice)
+        try:
+            customer_id = int(choice)
+            if len(choice) != 4:
+                raise ValueError("Invalid customer ID. Please enter a 4-digit ID.")
 
-            # Check if the customer already has a car rented
-            if selected_customer.get_rented_car() is not None:
-                print("This customer already has a car rented.")
-                print("------------------------------------")
-                break
+            if customer_id in customer_ids:
+                print(f"Customer with ID {choice} selected")
+                selected_customer = get_customer_by_id(loaded_customers, choice)
 
-            print("Quick car ID list:", car_ids)
-
-            # Prompt the user to enter the car's ID or return to the menu
-            choice = input("Enter the car's ID or press X to return to the menu: ")
-
-            if choice.lower() == "x":
-                break
-
-            # Check if the entered car ID is valid
-            elif int(choice) in car_ids:
-                selected_car = get_car_by_id(loaded_cars, int(choice))
-
-                # Check if the car is already rented
-                if selected_car.check_availability():
-                    print("This car is already rented out.")
-                else:
-                    # Assign the car to the customer and mark it as rented
-                    selected_customer.set_rented_car(choice)
-                    selected_car.set_rented()
-                    print("The car has been given to the customer")
+                # Check if the customer already has a car rented
+                if selected_customer.get_rented_car() is not None:
+                    print("This customer already has a car rented.")
                     print("------------------------------------")
                     break
+
+                print("Quick car ID list:", car_ids)
+
+                # Prompt the user to enter the car's ID or return to the menu
+                choice = input("Enter the car's ID or press X to return to the menu: ")
+
+                if choice.lower() == "x":
+                    break
+
+                # Check if the entered car ID is valid
+                try:
+                    car_id = int(choice)
+                    if len(choice) != 4:
+                        raise ValueError("Invalid car ID. Please enter a 4-digit ID.")
+
+                    if car_id in car_ids:
+                        selected_car = get_car_by_id(loaded_cars, car_id)
+
+                        # Check if the car is already rented
+                        if selected_car.check_availability():
+                            print("This car is already rented out.")
+                        else:
+                            # Assign the car to the customer and mark it as rented
+                            selected_customer.set_rented_car(choice)
+                            selected_car.set_rented()
+                            print("The car has been given to the customer")
+                            print("------------------------------------")
+                            break
+                    else:
+                        print("Invalid car ID.")
+                except ValueError:
+                    print("Invalid car ID. Please enter a numeric value.")
             else:
-                print("Invalid car ID.")
-        else:
-            print("Invalid customer ID.")
+                print("Invalid customer ID.")
+        except ValueError:
+            print("Invalid customer ID. Please enter a numeric value.")
 
 
 def check_in_car():
@@ -302,50 +334,64 @@ def check_in_car():
             break
 
         # Check if the entered customer ID is valid
-        elif int(choice) in customer_ids:
-            print(f"Customer with ID {choice} selected")
-            selected_customer = get_customer_by_id(loaded_customers, choice)
+        try:
+            customer_id = int(choice)
+            if len(choice) != 4:
+                raise ValueError("Invalid customer ID. Please enter a 4-digit ID.")
 
-            # Check if the customer has a rented car
-            if selected_customer.get_rented_car() is None:
-                print("This customer doesn't have a car rented.")
-                print("------------------------------------")
-                break
+            if customer_id in customer_ids:
+                print(f"Customer with ID {choice} selected")
+                selected_customer = get_customer_by_id(loaded_customers, choice)
 
-            print("Quick car ID list:", car_ids)
-
-            # Prompt the user to enter the car's ID or return to the menu
-            choice = input("Enter the car's ID or press X to return to the menu: ")
-
-            if choice.lower() == "x":
-                break
-
-            # Check if the entered car ID is valid
-            elif int(choice) in car_ids:
-                selected_car = get_car_by_id(loaded_cars, int(choice))
-
-                # Check if the car is currently rented
-                if not selected_car.check_availability():
-                    print("This car is not currently rented.")
-                else:
-                    # Perform the check-in process for the car
-                    check_in(selected_customer, selected_car)
-                    print("The car has been returned")
+                # Check if the customer has a rented car
+                if selected_customer.get_rented_car() is None:
+                    print("This customer doesn't have a car rented.")
                     print("------------------------------------")
-                    price_calc(selected_car)
-                    print("------------------------------------")
-                    print("Confirm the receipt of the payment with Y")
-
-                    while True:
-                        # Prompt the user to confirm the payment receipt
-                        if input("> ").lower() == "y":
-                            print("Payment Confirmed")
-                            print("------------------------------------")
-                            break
-                        else:
-                            print("Payment has not been confirmed")
                     break
+
+                print("Quick car ID list:", car_ids)
+
+                # Prompt the user to enter the car's ID or return to the menu
+                choice = input("Enter the car's ID or press X to return to the menu: ")
+
+                if choice.lower() == "x":
+                    break
+
+                # Check if the entered car ID is valid
+                try:
+                    car_id = int(choice)
+                    if len(choice) != 4:
+                        raise ValueError("Invalid car ID. Please enter a 4-digit ID.")
+
+                    if car_id in car_ids:
+                        selected_car = get_car_by_id(loaded_cars, car_id)
+
+                        # Check if the car is currently rented
+                        if not selected_car.check_availability():
+                            print("This car is not currently rented.")
+                        else:
+                            # Perform the check-in process for the car
+                            check_in(selected_customer, selected_car)
+                            print("The car has been returned")
+                            print("------------------------------------")
+                            price_calc(selected_car)
+                            print("------------------------------------")
+                            print("Confirm the receipt of the payment with Y")
+
+                            while True:
+                                # Prompt the user to confirm the payment receipt
+                                if input("> ").lower() == "y":
+                                    print("Payment Confirmed")
+                                    print("------------------------------------")
+                                    break
+                                else:
+                                    print("Payment has not been confirmed")
+                            break
+                    else:
+                        print("Invalid car ID.")
+                except ValueError:
+                    print("Invalid car ID. Please enter a numeric value.")
             else:
-                print("Invalid car ID.")
-        else:
-            print("Invalid customer ID.")
+                print("Invalid customer ID.")
+        except ValueError:
+            print("Invalid customer ID. Please enter a numeric value.")
